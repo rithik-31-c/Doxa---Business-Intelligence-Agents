@@ -55,7 +55,7 @@ AI Explanation
 
 ---
 
-# 🧠 Core Idea
+## 🧠 Core Idea
 
 The key principle behind DOXA is:
 
@@ -76,7 +76,7 @@ It can be applied to different types of tabular datasets such as:
 
 ---
 
-# 🤖 Agent-Based Architecture
+## 🤖 Agent-Based Architecture
 
 DOXA is not simply a single LLM connected to a CSV.
 
@@ -138,9 +138,9 @@ It is designed around **specialized agents and deterministic components**, where
 
 ---
 
-# 🔹 DOXA Components
+## 🔹 DOXA Components
 
-## 1. Dataset Profiler
+### 1. Dataset Profiler
 
 The Dataset Profiler performs the initial structural analysis of an uploaded dataset.
 
@@ -161,7 +161,7 @@ The profiler focuses on **what the data looks like**, rather than deciding what 
 
 ---
 
-## 2. Schema Understanding Agent
+### 2. Schema Understanding Agent
 
 The Schema Understanding Agent tries to understand the semantic meaning of the dataset.
 
@@ -198,17 +198,17 @@ The semantic understanding combines:
 
 ---
 
-# 🔹 3. Query Planning Agent
+### 3. Query Planning Agent
 
 The Query Planning Agent converts the user's natural-language question into a structured analysis plan.
 
 For example:
 
-### User question
+**User question**
 
 > Which product generated the highest revenue?
 
-### Generated plan
+**Generated plan**
 
 ```json
 {
@@ -231,7 +231,7 @@ The actual calculation is handled separately.
 
 ---
 
-# 📊 4. Analysis Engine
+### 4. Analysis Engine
 
 The Analysis Engine performs deterministic calculations on the actual dataset.
 
@@ -264,7 +264,7 @@ This separation helps prevent the LLM from inventing numerical results.
 
 ---
 
-# 🤖 5. Explanation Layer
+### 5. Explanation Layer
 
 After the deterministic analysis produces evidence, the AI explanation layer converts the results into a human-readable business explanation.
 
@@ -281,14 +281,14 @@ Then the AI receives the evidence and explains it.
 This creates a separation between:
 
 ```text
-AI → Understand + Plan + Explain
+AI   → Understand + Plan + Explain
 
 Code → Calculate + Validate
 ```
 
 ---
 
-# 🔄 Investigation Workflow
+## 🔄 Investigation Workflow
 
 The complete DOXA workflow can be represented as:
 
@@ -338,7 +338,7 @@ The complete DOXA workflow can be represented as:
 
 ---
 
-# 🧩 Why Separate AI and Calculation?
+## 🧩 Why Separate AI and Calculation?
 
 One of the design principles of DOXA is:
 
@@ -369,11 +369,11 @@ Therefore DOXA combines both.
        ┌──────────┴──────────┐
        │                     │
        ▼                     ▼
-      AI                  CODE
+      AI                    CODE
        │                     │
-Understand               Calculate
-Plan                     Validate
-Explain                  Analyze
+   Understand             Calculate
+   Plan                   Validate
+   Explain                Analyze
        │                     │
        └──────────┬──────────┘
                   ▼
@@ -382,30 +382,30 @@ Explain                  Analyze
 
 ---
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
-## Frontend
+### Frontend
 
 - React
 - Vite
 - JavaScript
 - CSS
 
-## Backend
+### Backend
 
 - Node.js
 - Express.js
 - Multer
 - CSV Parse
 
-## AI / ML
+### AI / ML
 
 - Llama 3.2
 - Ollama
 - Hugging Face Transformers
 - all-MiniLM-L6-v2
 
-## Data Processing
+### Data Processing
 
 - CSV parsing
 - Dataset profiling
@@ -415,7 +415,7 @@ Explain                  Analyze
 
 ---
 
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```text
 DOXA/
@@ -478,27 +478,23 @@ DOXA/
 
 ---
 
-# ⚙️ How to Run DOXA Locally
+## ⚙️ How to Run DOXA Locally
 
-## 1. Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone <YOUR_REPOSITORY_URL>
 cd DOXA
 ```
 
----
-
-## 2. Install backend dependencies
+### 2. Install backend dependencies
 
 ```bash
 cd server
 npm install
 ```
 
----
-
-## 3. Install frontend dependencies
+### 3. Install frontend dependencies
 
 Open another terminal:
 
@@ -509,7 +505,7 @@ npm install
 
 ---
 
-# 🦙 Setup Ollama
+## 🦙 Setup Ollama
 
 DOXA currently uses **Llama 3.2 through Ollama**.
 
@@ -529,7 +525,7 @@ ollama run llama3.2
 
 ---
 
-# 🔐 Environment Variables
+## 🔐 Environment Variables
 
 Create:
 
@@ -545,7 +541,7 @@ PORT=5000
 
 ---
 
-# ▶️ Start the Backend
+## ▶️ Start the Backend
 
 From the `server` directory:
 
@@ -561,7 +557,7 @@ http://localhost:5000
 
 ---
 
-# ▶️ Start the Frontend
+## ▶️ Start the Frontend
 
 From the `client` directory:
 
@@ -573,7 +569,7 @@ Vite will provide the local frontend URL.
 
 ---
 
-# 💬 Example Questions
+## 💬 Example Questions
 
 Once a dataset is uploaded, users can ask questions such as:
 
@@ -599,9 +595,9 @@ The exact questions DOXA can answer depend on the structure and semantic meaning
 
 ---
 
-# 🔬 Example Investigation
+## 🔬 Example Investigation
 
-### Question
+**Question**
 
 > Why are returns high, and which products are contributing most?
 
@@ -620,37 +616,23 @@ The system can then present the results as evidence rather than relying on an un
 
 ---
 
-# 🎯 Design Philosophy
+## 🎯 Design Philosophy
 
-DOXA follows several important principles.
+DOXA follows several important principles:
 
-### 1. Dataset Independence
-
-The system should not depend on one fixed business schema.
-
-### 2. Specialized Responsibilities
-
-Different components should handle different responsibilities instead of asking one LLM to perform everything.
-
-### 3. Deterministic Analysis
-
-Numerical calculations should come from the data and analysis engine.
-
-### 4. Evidence Before Explanation
-
-The system should calculate evidence before asking AI to explain it.
-
-### 5. Natural Language Interaction
-
-Users should be able to investigate data using normal questions rather than writing SQL or Python.
+1. **Dataset Independence** — The system should not depend on one fixed business schema.
+2. **Specialized Responsibilities** — Different components should handle different responsibilities instead of asking one LLM to perform everything.
+3. **Deterministic Analysis** — Numerical calculations should come from the data and analysis engine.
+4. **Evidence Before Explanation** — The system should calculate evidence before asking AI to explain it.
+5. **Natural Language Interaction** — Users should be able to investigate data using normal questions rather than writing SQL or Python.
 
 ---
 
-# 🚧 Current Status
+## 🚧 Current Status
 
 DOXA is currently under active development.
 
-Current capabilities include:
+**Current capabilities include:**
 
 - CSV upload
 - Dataset profiling
@@ -662,7 +644,7 @@ Current capabilities include:
 - Dataset preview
 - Investigation workflow
 
-Future development will focus on:
+**Future development will focus on:**
 
 - More analysis operations
 - More complex multi-step investigations
@@ -675,7 +657,7 @@ Future development will focus on:
 
 ---
 
-# 🌐 Public Release
+## 🌐 Public Release
 
 DOXA is currently being developed and tested.
 
@@ -683,7 +665,7 @@ DOXA is currently being developed and tested.
 
 ---
 
-# 🧠 Project Vision
+## 🧠 Project Vision
 
 DOXA aims to move business intelligence from:
 
@@ -704,15 +686,15 @@ The long-term goal is to make data investigation more accessible to people who m
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 **Rithik E**
 
-ML Engineer / Full stack Developer
+ML Engineer / Full Stack Developer
 
 ---
 
-# ⭐ If you find DOXA interesting
+## ⭐ If you find DOXA interesting
 
 The project is currently under development, and more capabilities are being added.
 
