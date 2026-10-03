@@ -1,0 +1,719 @@
+# DOXA
+
+### Business Intelligence Agents
+
+> **Find the reason behind the numbers.**
+
+DOXA is an AI-powered business intelligence and data investigation system designed to help users understand **why something is happening in their data**, rather than simply displaying numbers or predefined dashboards.
+
+Users can upload a CSV dataset and ask questions in natural language. DOXA analyzes the dataset, understands the meaning of its columns, creates an investigation plan, performs deterministic analysis, and uses AI to explain the findings with supporting evidence.
+
+---
+
+## 🚀 What is DOXA?
+
+Traditional business intelligence systems often depend on:
+
+- Fixed dashboards
+- Predefined schemas
+- Predefined queries
+- Domain-specific logic
+
+DOXA takes a more flexible approach.
+
+The user provides:
+
+```text
+A dataset + a question
+```
+
+DOXA then determines how that question should be investigated based on the structure and meaning of the uploaded data.
+
+### Example
+
+A user could upload a dataset and ask:
+
+> "Why are returns high, and which products are contributing most to them?"
+
+Instead of simply sending the CSV and question to an LLM, DOXA breaks the investigation into specialized responsibilities:
+
+```text
+Dataset
+   ↓
+Dataset Understanding
+   ↓
+Question Understanding
+   ↓
+Investigation Planning
+   ↓
+Deterministic Analysis
+   ↓
+Evidence
+   ↓
+AI Explanation
+```
+
+---
+
+# 🧠 Core Idea
+
+The key principle behind DOXA is:
+
+> **The dataset tells DOXA what can be analyzed, while the user's question tells DOXA what should be analyzed.**
+
+DOXA is designed to be **dataset-independent** rather than being built around one fixed business schema.
+
+It can be applied to different types of tabular datasets such as:
+
+- Sales
+- Customers
+- Finance
+- Employees
+- Education
+- Healthcare
+- Operations
+- And other structured datasets
+
+---
+
+# 🤖 Agent-Based Architecture
+
+DOXA is not simply a single LLM connected to a CSV.
+
+It is designed around **specialized agents and deterministic components**, where each part has a specific responsibility.
+
+```text
+                    ┌─────────────────┐
+                    │      USER       │
+                    └────────┬────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │    FRONTEND     │
+                    │   React + Vite  │
+                    └────────┬────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │     BACKEND     │
+                    │    Express.js   │
+                    └────────┬────────┘
+                             │
+              ┌──────────────┴──────────────┐
+              │                             │
+              ▼                             ▼
+     ┌─────────────────┐           ┌─────────────────┐
+     │ Dataset Profiler│           │ CSV Processing  │
+     └────────┬────────┘           └─────────────────┘
+              │
+              ▼
+     ┌─────────────────────┐
+     │ Schema Understanding │
+     │        Agent         │
+     └──────────┬──────────┘
+                │
+                ▼
+     ┌─────────────────────┐
+     │  Query Planning     │
+     │       Agent         │
+     └──────────┬──────────┘
+                │
+                ▼
+     ┌─────────────────────┐
+     │   Analysis Engine   │
+     │ Deterministic Tools │
+     └──────────┬──────────┘
+                │
+                ▼
+     ┌─────────────────────┐
+     │ Explanation / LLM   │
+     │       Layer         │
+     └──────────┬──────────┘
+                │
+                ▼
+        ┌─────────────────┐
+        │ Business Insight│
+        └─────────────────┘
+```
+
+---
+
+# 🔹 DOXA Components
+
+## 1. Dataset Profiler
+
+The Dataset Profiler performs the initial structural analysis of an uploaded dataset.
+
+It identifies things such as:
+
+- Number of rows
+- Number of columns
+- Numeric columns
+- Date columns
+- Categorical columns
+- Boolean columns
+- Missing values
+- Unique values
+- Basic statistics
+- Structural dataset characteristics
+
+The profiler focuses on **what the data looks like**, rather than deciding what the business data means.
+
+---
+
+## 2. Schema Understanding Agent
+
+The Schema Understanding Agent tries to understand the semantic meaning of the dataset.
+
+For example, a dataset might contain:
+
+```text
+customer_id
+amount
+order_date
+location
+status
+```
+
+The system can identify potential roles such as:
+
+```text
+customer_id → identifier
+amount      → measure / monetary
+order_date  → time
+location    → geography / dimension
+status      → status
+```
+
+This allows DOXA to work with different datasets without requiring every column to be manually configured.
+
+The semantic understanding combines:
+
+- Structural information
+- Column names
+- Sample values
+- Value patterns
+- Embedding-based similarity
+- Generic semantic role descriptions
+
+---
+
+# 🔹 3. Query Planning Agent
+
+The Query Planning Agent converts the user's natural-language question into a structured analysis plan.
+
+For example:
+
+### User question
+
+> Which product generated the highest revenue?
+
+### Generated plan
+
+```json
+{
+  "operation": "group_aggregate",
+  "groupBy": "product",
+  "measure": "revenue",
+  "aggregation": "sum",
+  "sort": "descending",
+  "limit": 1
+}
+```
+
+The important point is that the LLM does **not directly calculate the answer**.
+
+It determines:
+
+> **What analysis should be performed?**
+
+The actual calculation is handled separately.
+
+---
+
+# 📊 4. Analysis Engine
+
+The Analysis Engine performs deterministic calculations on the actual dataset.
+
+Supported analysis operations include:
+
+- Aggregation
+- Group aggregation
+- Filtering
+- Sorting
+- Ranking
+- Percentage calculations
+- Trend analysis
+- Distribution analysis
+
+For example:
+
+```text
+Question
+   ↓
+Query Planner
+   ↓
+"Group by product and calculate revenue"
+   ↓
+Analysis Engine
+   ↓
+Exact numerical result
+```
+
+This separation helps prevent the LLM from inventing numerical results.
+
+---
+
+# 🤖 5. Explanation Layer
+
+After the deterministic analysis produces evidence, the AI explanation layer converts the results into a human-readable business explanation.
+
+Instead of asking the LLM to calculate:
+
+```text
+"What is the total revenue?"
+```
+
+DOXA first calculates the value using the analysis engine.
+
+Then the AI receives the evidence and explains it.
+
+This creates a separation between:
+
+```text
+AI → Understand + Plan + Explain
+
+Code → Calculate + Validate
+```
+
+---
+
+# 🔄 Investigation Workflow
+
+The complete DOXA workflow can be represented as:
+
+```text
+                CSV DATASET
+                     │
+                     ▼
+             ┌───────────────┐
+             │ CSV Parser    │
+             └───────┬───────┘
+                     │
+                     ▼
+             ┌───────────────┐
+             │ Data Profiler │
+             └───────┬───────┘
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │ Schema Understanding│
+          └──────────┬──────────┘
+                     │
+                     ▼
+               User Question
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │  Query Planner      │
+          │       Agent         │
+          └──────────┬──────────┘
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │  Analysis Engine    │
+          └──────────┬──────────┘
+                     │
+                     ▼
+                  Evidence
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │  AI Explanation     │
+          └──────────┬──────────┘
+                     │
+                     ▼
+             Business Insight
+```
+
+---
+
+# 🧩 Why Separate AI and Calculation?
+
+One of the design principles of DOXA is:
+
+> **Don't ask the LLM to do what deterministic code can do better.**
+
+LLMs are useful for:
+
+- Understanding natural language
+- Understanding semantic meaning
+- Planning investigations
+- Explaining results
+
+Code is better suited for:
+
+- Exact calculations
+- Aggregations
+- Filtering
+- Sorting
+- Ranking
+- Statistical operations
+- Data validation
+
+Therefore DOXA combines both.
+
+```text
+                DOXA
+                  │
+       ┌──────────┴──────────┐
+       │                     │
+       ▼                     ▼
+      AI                  CODE
+       │                     │
+Understand               Calculate
+Plan                     Validate
+Explain                  Analyze
+       │                     │
+       └──────────┬──────────┘
+                  ▼
+             Final Insight
+```
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+- React
+- Vite
+- JavaScript
+- CSS
+
+## Backend
+
+- Node.js
+- Express.js
+- Multer
+- CSV Parse
+
+## AI / ML
+
+- Llama 3.2
+- Ollama
+- Hugging Face Transformers
+- all-MiniLM-L6-v2
+
+## Data Processing
+
+- CSV parsing
+- Dataset profiling
+- Deterministic analysis
+- Statistical operations
+- Semantic column understanding
+
+---
+
+# 📁 Project Structure
+
+```text
+DOXA/
+│
+├── server/
+│   │
+│   ├── agents/
+│   │   ├── datasetProfiler.js
+│   │   ├── schemaUnderstanding.js
+│   │   ├── queryPlanner.js
+│   │   ├── toolSelector.js
+│   │   └── shopAgent.js
+│   │
+│   ├── analysis/
+│   │   └── analysisEngine.js
+│   │
+│   ├── ai/
+│   │   ├── llamaClient.js
+│   │   └── embeddingClient.js
+│   │
+│   ├── controllers/
+│   │   ├── shopController.js
+│   │   └── uploadController.js
+│   │
+│   ├── services/
+│   │   ├── shopAnalysisService.js
+│   │   └── datasetService.js
+│   │
+│   ├── tools/
+│   │   ├── salesTool.js
+│   │   ├── inventoryTool.js
+│   │   ├── trendTool.js
+│   │   └── calculatorTool.js
+│   │
+│   ├── utils/
+│   │   ├── csvParser.js
+│   │   └── vectorUtils.js
+│   │
+│   ├── routes/
+│   │   └── shopRoutes.js
+│   │
+│   ├── data/
+│   │   ├── sales.csv
+│   │   └── inventory.csv
+│   │
+│   ├── uploads/
+│   │
+│   ├── server.js
+│   ├── package.json
+│   ├── .env
+│   └── .gitignore
+│
+└── client/
+    └── src/
+        ├── components/
+        ├── pages/
+        ├── services/
+        └── ...
+```
+
+---
+
+# ⚙️ How to Run DOXA Locally
+
+## 1. Clone the repository
+
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd DOXA
+```
+
+---
+
+## 2. Install backend dependencies
+
+```bash
+cd server
+npm install
+```
+
+---
+
+## 3. Install frontend dependencies
+
+Open another terminal:
+
+```bash
+cd client
+npm install
+```
+
+---
+
+# 🦙 Setup Ollama
+
+DOXA currently uses **Llama 3.2 through Ollama**.
+
+Install Ollama and pull the model:
+
+```bash
+ollama pull llama3.2
+```
+
+Then make sure Ollama is running.
+
+You can test it with:
+
+```bash
+ollama run llama3.2
+```
+
+---
+
+# 🔐 Environment Variables
+
+Create:
+
+```text
+server/.env
+```
+
+Example:
+
+```env
+PORT=5000
+```
+
+---
+
+# ▶️ Start the Backend
+
+From the `server` directory:
+
+```bash
+npm run dev
+```
+
+The backend will run at:
+
+```text
+http://localhost:5000
+```
+
+---
+
+# ▶️ Start the Frontend
+
+From the `client` directory:
+
+```bash
+npm run dev
+```
+
+Vite will provide the local frontend URL.
+
+---
+
+# 💬 Example Questions
+
+Once a dataset is uploaded, users can ask questions such as:
+
+```text
+Why are my returns high?
+
+Which products generate the highest revenue?
+
+Which location contributes the most revenue?
+
+Which products have high quantity but low revenue?
+
+What percentage of orders were returned?
+
+What is the trend in revenue over time?
+
+Which category has the highest average value?
+
+Why is revenue concentrated in a few products?
+```
+
+The exact questions DOXA can answer depend on the structure and semantic meaning of the uploaded dataset.
+
+---
+
+# 🔬 Example Investigation
+
+### Question
+
+> Why are returns high, and which products are contributing most?
+
+DOXA can break the investigation into analytical operations such as:
+
+```text
+1. Calculate overall return percentage
+2. Group returned records by product
+3. Calculate contribution by product
+4. Rank products
+5. Generate evidence
+6. Explain the findings
+```
+
+The system can then present the results as evidence rather than relying on an unsupported AI-generated explanation.
+
+---
+
+# 🎯 Design Philosophy
+
+DOXA follows several important principles.
+
+### 1. Dataset Independence
+
+The system should not depend on one fixed business schema.
+
+### 2. Specialized Responsibilities
+
+Different components should handle different responsibilities instead of asking one LLM to perform everything.
+
+### 3. Deterministic Analysis
+
+Numerical calculations should come from the data and analysis engine.
+
+### 4. Evidence Before Explanation
+
+The system should calculate evidence before asking AI to explain it.
+
+### 5. Natural Language Interaction
+
+Users should be able to investigate data using normal questions rather than writing SQL or Python.
+
+---
+
+# 🚧 Current Status
+
+DOXA is currently under active development.
+
+Current capabilities include:
+
+- CSV upload
+- Dataset profiling
+- Semantic schema understanding
+- Natural-language question handling
+- Query planning
+- Deterministic data analysis
+- AI-powered explanation
+- Dataset preview
+- Investigation workflow
+
+Future development will focus on:
+
+- More analysis operations
+- More complex multi-step investigations
+- Better reasoning over multiple dimensions
+- Improved evidence generation
+- Better business recommendations
+- Larger dataset support
+- Production deployment
+- Public access
+
+---
+
+# 🌐 Public Release
+
+DOXA is currently being developed and tested.
+
+**A public version of DOXA will be introduced soon and made available for everyone to explore.**
+
+---
+
+# 🧠 Project Vision
+
+DOXA aims to move business intelligence from:
+
+```text
+"What happened?"
+```
+
+towards:
+
+```text
+"Why did it happen?"
+"What evidence supports it?"
+"What factors contributed to it?"
+"What should I investigate next?"
+```
+
+The long-term goal is to make data investigation more accessible to people who may not know SQL, Python, or traditional BI tools.
+
+---
+
+# 👨‍💻 Author
+
+**Rithik E**
+
+ML Engineer / Full stack Developer
+
+---
+
+# ⭐ If you find DOXA interesting
+
+The project is currently under development, and more capabilities are being added.
+
+**DOXA — Find the reason behind the numbers.**

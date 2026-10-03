@@ -1,0 +1,5 @@
+product,currentStock,reorderLevel,unitCost
+Rice,8,20,42
+Oil,35,15,105
+Sugar,40,20,35
+Tea,25,15,90
