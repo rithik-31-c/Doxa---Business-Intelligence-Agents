@@ -29,7 +29,7 @@
         |-- services
             |-- api.js
     |-- vite.config.js
-|-- readme
+|-- readme.md
 |-- server
     |-- .gitignore
     |-- agents
