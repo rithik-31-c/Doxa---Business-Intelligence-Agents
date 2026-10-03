@@ -1,4 +1,3 @@
-|-- .readme
 |-- client
     |-- .gitignore
     |-- .oxlintrc.json
@@ -30,6 +29,7 @@
         |-- services
             |-- api.js
     |-- vite.config.js
+|-- readme
 |-- server
     |-- .gitignore
     |-- agents
